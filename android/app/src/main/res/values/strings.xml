@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">wemealkit</string>
+<string name="facebook_app_id">1681427122264147</string>
+<string name="fb_login_protocol_scheme">fb1681427122264147</string>
+<string name="facebook_client_token">3d617e65f9b2ea907762fdc8d4559d08</string>
+</resources>
