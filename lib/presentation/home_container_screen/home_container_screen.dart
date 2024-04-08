@@ -5,7 +5,10 @@ import 'package:wemealkit/presentation/account_container_page/account_container_
 import 'package:wemealkit/presentation/cart_screen/cart_screen.dart';
 import 'package:wemealkit/presentation/discover_two_page/discover_two_page.dart';
 import 'package:wemealkit/presentation/home_page/home_page.dart';
+import 'package:wemealkit/presentation/login_create_account_options_screen/login_create_account_options_screen.dart';
 import 'package:wemealkit/presentation/notifications_screen/notifications_screen.dart';
+import 'package:wemealkit/presentation/payment_settings_screen/payment_settings_screen.dart';
+import 'package:wemealkit/presentation/shopping_two_screen/shopping_two_screen.dart';
 import 'package:wemealkit/widgets/custom_bottom_app_bar.dart';
 import 'package:wemealkit/widgets/custom_floating_button.dart';
 
@@ -15,6 +18,13 @@ class HomeContainerScreen extends ConsumerWidget {
 
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
+  void logout(BuildContext context) {
+    // Perform any necessary logout operations here (e.g., clearing user data, resetting state, etc.)
+    // Then navigate back to the login screen
+    Navigator.pushReplacementNamed(
+        context, AppRoutes.loginCreateAccountOptionsScreen);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
@@ -22,8 +32,14 @@ class HomeContainerScreen extends ConsumerWidget {
             body: Navigator(
                 key: navigatorKey,
                 initialRoute: AppRoutes.HomePage,
-                onUnknownRoute: (settings){
-                    
+                onUnknownRoute: (settings) {
+                  Navigator.pushReplacement(
+                    navigatorKey.currentContext!,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            LoginCreateAccountOptionsScreen()),
+                  );
+                  return null;
                 },
                 onGenerateRoute: (routeSetting) => PageRouteBuilder(
                     pageBuilder: (ctx, ani, ani1) =>
@@ -70,6 +86,12 @@ class HomeContainerScreen extends ConsumerWidget {
         return CartScreen();
       case AppRoutes.notificationsScreen:
         return NotificationsScreen();
+      case AppRoutes.loginCreateAccountOptionsScreen:
+        return LoginCreateAccountOptionsScreen();
+      case AppRoutes.shoppingTwoScreen:
+        return ShoppingTwoScreen();
+      case AppRoutes.paymentSettingsScreen:
+        return PaymentSettingsScreen();
       default:
         return DefaultWidget();
     }

@@ -108,7 +108,7 @@ class ShoppingTwoScreen extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 1.v),
             child: _buildTimeFrame(
               context,
-              dynamicText: "Kiểm tra đơn hàng",
+              dynamicText: "Kiểm tra đơn hàng",
               dynamicText1: "12:24",
             ),
           ),
@@ -125,7 +125,7 @@ class ShoppingTwoScreen extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 1.v),
             child: _buildTimeFrame(
               context,
-              dynamicText: "Tìm cửa hàng",
+              dynamicText: "Tìm cửa hàng",
               dynamicText1: "12:26",
             ),
           ),
@@ -142,7 +142,7 @@ class ShoppingTwoScreen extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 1.v),
             child: _buildTimeFrame(
               context,
-              dynamicText: "Chuẩn bị đơn hàng",
+              dynamicText: "Chuẩn bị đơn hàng",
               dynamicText1: "-",
             ),
           ),
@@ -158,7 +158,7 @@ class ShoppingTwoScreen extends StatelessWidget {
           Column(
             children: [
               Text(
-                "Đang giao hàng",
+                "Đanggiao hàng",
                 style: CustomTextStyles.labelLargeBluegray70001,
               ),
               SizedBox(height: 3.v),
@@ -427,13 +427,13 @@ class ShoppingTwoScreen extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildThayi(BuildContext context) {
-    return CustomOutlinedButton(
-      width: 74.h,
-      text: "Thay đổi",
-      margin: EdgeInsets.symmetric(vertical: 4.v),
-    );
-  }
+  // Widget _buildThayi(BuildContext context) {
+  //   return CustomOutlinedButton(
+  //     width: 74.h,
+  //     text: "Thay đổi",
+  //     margin: EdgeInsets.symmetric(vertical: 4.v),
+  //   );
+  // }
 
   /// Section Widget
   Widget _buildHunHng(BuildContext context) {
@@ -488,7 +488,13 @@ class ShoppingTwoScreen extends StatelessWidget {
                 ),
               ),
               Spacer(),
-              _buildThayi(context),
+              CustomOutlinedButton(
+                width: 74.h,
+                text: "Thay đổi",
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.paymentSettingsScreen);
+                },
+              )
             ],
           ),
           SizedBox(height: 17.v),

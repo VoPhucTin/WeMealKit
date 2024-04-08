@@ -98,7 +98,6 @@ class AccountContainerPage extends ConsumerWidget {
               );
             }));
   }
-  
 
   /// Section Widget
   Widget _buildContentOne(BuildContext context) {
@@ -200,10 +199,10 @@ class AccountContainerPage extends ConsumerWidget {
     // var darkMode = ref.watch(darkModeProvider);
     return GestureDetector(
       onTap: () async {
-        // ScaffoldMessenger.of(context)
-        //     .showSnackBar(SnackBar(content: Text('Đăng xuất')));
+        // Perform logout action
         FirebaseAuth.instance.signOut();
-        Navigator.pushNamed(context, AppRoutes.loginCreateAccountOptionsScreen);
+        // Navigate to the login or signup options screen
+        Navigator.pushReplacementNamed(context, AppRoutes.loginCreateAccountOptionsScreen);
       },
       child: Container(
           padding: EdgeInsets.all(16.h),

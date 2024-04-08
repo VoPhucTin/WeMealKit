@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:wemealkit/core/app_export.dart';
 import 'package:wemealkit/service/firebase_services.dart';
 import 'package:wemealkit/widgets/app_bar/appbar_leading_image.dart';
@@ -19,9 +22,33 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController emailController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
 
-  TextEditingController enterPasswordController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  void login(String username, password) async {
+     try{
+    String body = jsonEncode(<String, String>{
+      'username': username,
+      'password': password,
+    });
+
+    Response response = await post(
+      Uri.parse('http://accountntransaction.eja6csejffamd5db.southeastasia.azurecontainer.io/v1/auths/login'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: body,
+    );
+    
+    if(response.statusCode == 200){
+      print('login successfully');
+      Navigator.pushNamed(context, AppRoutes.homeContainerScreen);
+    } else print('fail, status code: ${response.statusCode}');
+  }catch(e){
+    print(e.toString());
+  }
+  }
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -51,8 +78,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     CustomElevatedButton(
                       text: "Đăng nhập",
                       onPressed: () {
-                        Navigator.pushNamed(
-                            context, AppRoutes.homeContainerScreen);
+                        // Navigator.pushNamed(
+                        //     context, AppRoutes.homeContainerScreen);
+                        login(usernameController.text.toString(),
+                            passwordController.text.toString());
+                        print('login');
                       },
                     ),
                     SizedBox(height: 25.v),
@@ -79,16 +109,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       buttonStyle: CustomButtonStyles.outlineTealTL16,
                       onPressed: () async {
-                        var result = await FirebaseServices().signInWithGoogle();
+                        var result =
+                            await FirebaseServices().signInWithGoogle();
                         if (result != null) {
                           Navigator.pushNamed(
                               context, AppRoutes.homeContainerScreen);
                           print('Login Success !');
                         } else {
-                          const snackbar = SnackBar(content: Text('Login Google fail !'));
+                          const snackbar =
+                              SnackBar(content: Text('Login Google fail !'));
                           ScaffoldMessenger.of(context).showSnackBar(snackbar);
                         }
-                        
                       },
                     ),
                     SizedBox(height: 16.v),
@@ -154,12 +185,12 @@ class _LoginScreenState extends State<LoginScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Email hoặc Số điện thoại",
+          "Tài khoản",
           style: theme.textTheme.titleMedium,
         ),
         SizedBox(height: 12.v),
         CustomTextFormField(
-          controller: emailController,
+          controller: usernameController,
           hintText: "Nhập tại đây...",
           prefix: Container(
             margin: EdgeInsets.fromLTRB(16.h, 17.v, 12.h, 17.v),
@@ -188,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         SizedBox(height: 12.v),
         CustomTextFormField(
-          controller: enterPasswordController,
+          controller: passwordController,
           hintText: "Nhập mật khẩu...",
           textInputAction: TextInputAction.done,
           textInputType: TextInputType.visiblePassword,

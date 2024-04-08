@@ -200,6 +200,10 @@ class CartScreen extends StatelessWidget {
         CustomElevatedButton(
           text: "Gửi đơn hàng ->",
           buttonStyle: CustomButtonStyles.fillOrange,
+          onPressed: () {
+             Navigator.pushNamed(
+                          context, AppRoutes.shoppingTwoScreen);
+          },
         ),
       ],
     );
